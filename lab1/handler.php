@@ -19,7 +19,6 @@ $currentTime_last_values = array();
 $isHit_last_values = array();
 $workTime_last_values = array();
 
-
 if (isset($_COOKIE["x"])) {
     foreach (json_decode($_COOKIE["x"]) as $val) $x_last_values[] = $val;
     foreach (json_decode($_COOKIE["y"]) as $val) $y_last_values[] = $val;
@@ -27,18 +26,6 @@ if (isset($_COOKIE["x"])) {
     foreach (json_decode($_COOKIE["currentTime"]) as $val) $currentTime_last_values[] = $val;
     foreach (json_decode($_COOKIE["isHit"]) as $val) $isHit_last_values[] = $val;
     foreach (json_decode($_COOKIE["workTime"]) as $val) $workTime_last_values[] = $val;
-}
-
-function checkHit($x, $y, $R)
-{
-    if ($x > 0 && $y >= 0) {
-        if ($x <= $R && $y <= $R / 2) return "Попал";
-    } else if ($x <= 0 && $y >= 0) {
-        if (pow($x, 2) + pow($y, 2) <= pow($R, 2)) return "Попал";
-    } else if ($x <= 0 && $y < 0) {
-        if ($y >= (-2) * $x - $R) return "Попал";
-    }
-    return "Не попал";
 }
 
 $x_last_values[] = $x;
@@ -53,12 +40,11 @@ setcookie('R', json_encode($R_last_values));
 setcookie('currentTime', json_encode($currentTime_last_values));
 setcookie('isHit', json_encode($isHit_last_values));
 
-$finishTime = microtime(true);
-
 $size = count($x_last_values);
 
 $rows = new Rows();
 
+$finishTime = microtime(true);
 $workTime_last_values[] = number_format($finishTime - $startTime, 7);
 setcookie('workTime', json_encode($workTime_last_values));
 
@@ -78,7 +64,6 @@ if ($size > $MAX_SIZE_OF_ROWS) {
     $size--;
 }
 
-
 for ($i = $size - 1; $i >= 0; $i--) {
     $row = new Row($currentTime_last_values[$i], $x_last_values[$i], $y_last_values[$i], $R_last_values[$i],
         $isHit_last_values[$i], $workTime_last_values[$i]);
@@ -86,3 +71,15 @@ for ($i = $size - 1; $i >= 0; $i--) {
 }
 
 printRow($rows);
+
+function checkHit($x, $y, $R)
+{
+    if ($x > 0 && $y >= 0) {
+        if ($x <= $R && $y <= $R / 2) return "Попал";
+    } else if ($x <= 0 && $y >= 0) {
+        if (pow($x, 2) + pow($y, 2) <= pow($R, 2)) return "Попал";
+    } else if ($x <= 0 && $y < 0) {
+        if ($y >= (-2) * $x - $R) return "Попал";
+    }
+    return "Не попал";
+}

@@ -34,9 +34,9 @@ function validateY() {
     y = $('#text_input').val().replace(",", ".");
     if (y !== "" && y >= -3 && y <= 5 && calculateDigitsAfterPoint(y) < 10) {
 
-    }else if (calculateDigitsAfterPoint(y) >= 10) {
+    } else if (calculateDigitsAfterPoint(y) >= 10) {
         sendError("Введите меньше 10 знаков после запятой у Y!")
-    }else sendError("Y некорректен")
+    } else sendError("Y некорректен")
 }
 
 function validateR() {
