@@ -100,7 +100,7 @@
     </tr>
     <form id="answer" action="validator.js">
         <tr class="firstRow">
-            <td class="form" colspan="1" width="40%">
+            <td class="form" colspan="1" width="50%">
                 <div id="errorMessage"></div>
                 X:
                 <input type="radio" name="X" value="-3" class="radio"> -3
@@ -114,9 +114,9 @@
                 <input type="radio" name="X" value="5" class="radio"> 5 <br>
 
                 Y:
-                <input class="text" type="text" onkeypress='return (event.charCode >= 44 && event.charCode <= 57)'
-                       name="Y"
-                       id="text_input" placeholder="-3..5" autocomplete="off" onpaste="return false"><br>
+                <input class="text" type="text" name="Y" id="text_input"
+                       onkeypress='return ((event.charCode >= 44 && event.charCode <= 57) || event.charCode === 101)'
+                       placeholder="-3..5" autocomplete="off" onpaste="return false"><br>
 
                 R:
                 <input class="checkbox" type="checkbox" name="R" value="1"> 1
@@ -142,7 +142,24 @@
                 <th>R</th>
                 <th>Попадание</th>
                 <th>Время выполнения скрипта</th>
-                <tfoot id="rows" align="center"></tfoot>
+                <tfoot id="rows" align="center"><?php
+                require "Row.php";
+                require "Rows.php";
+                require "print-rows.php";
+                $x_last_values = json_decode($_COOKIE['x']);
+                $y_last_values = json_decode($_COOKIE['y']);
+                $R_last_values = json_decode($_COOKIE['R']);
+                $isHit_last_values = json_decode($_COOKIE['isHit']);
+                $currentTime_last_values = json_decode($_COOKIE['currentTime']);
+                $workTime_last_values = json_decode($_COOKIE['workTime']);
+                $rows = new Rows();
+                for ($i = count($x_last_values) - 1; $i >= 0; $i--) {
+                    $row = new Row($currentTime_last_values[$i], $x_last_values[$i], $y_last_values[$i], $R_last_values[$i],
+                        $isHit_last_values[$i], $workTime_last_values[$i]);
+                    $rows->push($row);
+                }
+                printRow($rows);
+                ?></tfoot>
             </table>
         </td>
     </tr>

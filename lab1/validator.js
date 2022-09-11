@@ -1,55 +1,51 @@
 let x, y, R;
-let flag;
-let calculateDigitsAfterPoint = x => ((x.toString().includes('.')) ?
-    (x.toString().split('.').pop().length) : (0));
+let isError;
+
+function calculateDigitsAfterPoint(x) {
+    if (x.toString().includes('.')) return x.toString().split('.').pop().length;
+    return 0;
+}
 
 function handleFormSubmit(event) {
-    flag = false;
+    isError = false;
     event.preventDefault();
     $('#errorMessage').text("")
     validateR();
     validateY();
     validateX();
+    if (!isError) {
+        $.ajax({
+            url: "handler.php",
+            type: "get",
+            data: {'x': x, 'y': y, 'R': R},
+            cache: false,
+            dataType: 'html',
+            success: function (result) {
+                $('#rows').html(result);
+            }
+        });
+    }
 }
 
 function validateX() {
     x = $('input[name="X"]:checked').val()
-    if (x != null) {
-        if (!flag) {
-            $.ajax({
-                url: "handler.php",
-                type: "get",
-                data: {'x': x, 'y': y, 'R': R},
-                cache: false,
-                dataType: 'html',
-                success: function (result) {
-                    $('#rows').html(result);
-                }
-            });
-        }
-    } else sendError("X некорректен")
+    if (x == null) sendError("X некорректен")
 }
 
 function validateY() {
-    y = $('#text_input').val().replace(",", ".");
-    if (y !== "" && y >= -3 && y <= 5 && calculateDigitsAfterPoint(y) < 10) {
-
-    } else if (calculateDigitsAfterPoint(y) >= 10) {
-        sendError("Введите меньше 10 знаков после запятой у Y!")
-    } else sendError("Y некорректен")
+    y = Number($('#text_input').val().replace(",", "."));
+    if (y === "" || y <= -3 || y >= 5 || !Number.isFinite(y)) sendError("Y некорректен");
+    else if (calculateDigitsAfterPoint(y) >= 10) sendError("Введите меньше 10 знаков после запятой у У!")
 }
 
 function validateR() {
     R = $('input[name="R"]:checked').val()
-    if ((R != null) &&
-        ($('input[name="R"]:checkbox:checked').length === 1)) {
-    } else sendError("R некорректен")
+    if ((R == null) || ($('input[name="R"]:checkbox:checked').length !== 1)) sendError("R некорректен")
 }
 
 function sendError(message) {
     $('#errorMessage').text(message);
-    $('#result').text("");
-    flag = true;
+    isError = true;
 }
 
 const applicationForm = document.getElementById('answer');
