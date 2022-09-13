@@ -146,19 +146,21 @@
                 require "Row.php";
                 require "Rows.php";
                 require "print-rows.php";
-                $x_last_values = json_decode($_COOKIE['x']);
-                $y_last_values = json_decode($_COOKIE['y']);
-                $R_last_values = json_decode($_COOKIE['R']);
-                $isHit_last_values = json_decode($_COOKIE['isHit']);
-                $currentTime_last_values = json_decode($_COOKIE['currentTime']);
-                $workTime_last_values = json_decode($_COOKIE['workTime']);
-                $rows = new Rows();
-                for ($i = count($x_last_values) - 1; $i >= 0; $i--) {
-                    $row = new Row($currentTime_last_values[$i], $x_last_values[$i], $y_last_values[$i], $R_last_values[$i],
-                        $isHit_last_values[$i], $workTime_last_values[$i]);
-                    $rows->push($row);
+                if (isset($_COOKIE['x'])) {
+                    $x_last_values = json_decode($_COOKIE['x']);
+                    $y_last_values = json_decode($_COOKIE['y']);
+                    $R_last_values = json_decode($_COOKIE['R']);
+                    $isHit_last_values = json_decode($_COOKIE['isHit']);
+                    $currentTime_last_values = json_decode($_COOKIE['currentTime']);
+                    $workTime_last_values = json_decode($_COOKIE['workTime']);
+                    $rows = new Rows();
+                    for ($i = count($x_last_values) - 1; $i >= 0; $i--) {
+                        $row = new Row($currentTime_last_values[$i], $x_last_values[$i], $y_last_values[$i], $R_last_values[$i],
+                            $isHit_last_values[$i], $workTime_last_values[$i]);
+                        $rows->push($row);
+                    }
+                    printRow($rows);
                 }
-                printRow($rows);
                 ?></tfoot>
             </table>
         </td>
