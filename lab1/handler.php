@@ -1,7 +1,7 @@
 <?php
 require 'Row.php';
 require 'Rows.php';
-require'print-rows.php';
+require 'print-rows.php';
 require 'Validator.php';
 
 $MAX_SIZE_OF_ROWS = 10;
@@ -51,19 +51,7 @@ else {
     $currentTime_last_values[] = $currentTime;
     $isHit_last_values[] = $isHit;
 
-    setcookie('x', json_encode($x_last_values));
-    setcookie('y', json_encode($y_last_values));
-    setcookie('R', json_encode($R_last_values));
-    setcookie('currentTime', json_encode($currentTime_last_values));
-    setcookie('isHit', json_encode($isHit_last_values));
-
     $size = count($x_last_values);
-
-    $rows = new Rows();
-
-    $finishTime = microtime(true);
-    $workTime_last_values[] = number_format($finishTime - $startTime, 7);
-    setcookie('workTime', json_encode($workTime_last_values));
 
     if ($size > $MAX_SIZE_OF_ROWS) {
         array_shift($x_last_values);
@@ -72,14 +60,20 @@ else {
         array_shift($currentTime_last_values);
         array_shift($workTime_last_values);
         array_shift($isHit_last_values);
-        setcookie('x', json_encode($x_last_values));
-        setcookie('y', json_encode($y_last_values));
-        setcookie('R', json_encode($R_last_values));
-        setcookie('currentTime', json_encode($currentTime_last_values));
-        setcookie('isHit', json_encode($isHit_last_values));
-        setcookie('workTime', json_encode($workTime_last_values));
         $size--;
     }
+
+    setcookie('x', json_encode($x_last_values));
+    setcookie('y', json_encode($y_last_values));
+    setcookie('R', json_encode($R_last_values));
+    setcookie('currentTime', json_encode($currentTime_last_values));
+    setcookie('isHit', json_encode($isHit_last_values));
+
+    $rows = new Rows();
+
+    $finishTime = microtime(true);
+    $workTime_last_values[] = number_format($finishTime - $startTime, 7);
+    setcookie('workTime', json_encode($workTime_last_values));
 
     for ($i = $size - 1; $i >= 0; $i--) {
         $row = new Row($currentTime_last_values[$i], $x_last_values[$i], $y_last_values[$i], $R_last_values[$i],

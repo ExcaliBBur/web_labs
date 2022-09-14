@@ -89,6 +89,7 @@
         }
 
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 <table id="table" border="0">
@@ -166,7 +167,6 @@
         </td>
     </tr>
 </table>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="validator.js"></script>
 </body>
 </html>

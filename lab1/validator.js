@@ -18,8 +18,6 @@ function handleFormSubmit(event) {
             url: "handler.php",
             type: "get",
             data: {'x': x, 'y': y, 'R': R},
-            cache: false,
-            dataType: 'html',
             success: function (result) {
                 $('#rows').html(result);
             }
