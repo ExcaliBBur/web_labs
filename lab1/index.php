@@ -116,7 +116,7 @@
 
                 Y:
                 <input class="text" type="text" name="Y" id="text_input"
-                       onkeypress='return ((event.charCode >= 44 && event.charCode <= 57) || event.charCode === 101)'
+                       onkeypress='return ((event.charCode >= 43 && event.charCode <= 57) || event.charCode === 101)'
                        placeholder="-3..5" autocomplete="off" onpaste="return false"><br>
 
                 R:

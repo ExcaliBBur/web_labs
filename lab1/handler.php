@@ -10,6 +10,8 @@ $startTime = microtime(true);
 $x = ($_GET["x"]);
 $y = ($_GET["y"]);
 $R = ($_GET["R"]);
+$timeZone = ($_GET["timeZone"]);
+date_default_timezone_set($timeZone);
 
 $validator = new Validator($x, $y, $R);
 if (!$validator->validateAll()) echo "Ошибка при валидации на сервере.";
@@ -26,7 +28,7 @@ else {
         return "Не попал";
     }
 
-    $currentTime = gmdate('d-m-y H:i:s по Гринвичу', time());
+    $currentTime = date('d-m-y H:i:s', time());
     $isHit = checkHit($x, $y, $R);
 
     $x_last_values = array();

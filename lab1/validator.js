@@ -17,7 +17,7 @@ function handleFormSubmit(event) {
         $.ajax({
             url: "handler.php",
             type: "get",
-            data: {'x': x, 'y': y, 'R': R},
+            data: {'x': x, 'y': y, 'R': R, 'timeZone' : Intl.DateTimeFormat().resolvedOptions().timeZone},
             success: function (result) {
                 $('#rows').html(result);
             }
