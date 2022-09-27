@@ -5,6 +5,10 @@ canvas.addEventListener("mousedown", function (e) {
     getMousePosition(canvas, e);
 })
 
+$(document).ready(function () {
+    drawHitStatic();
+})
+
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();
     let x = event.clientX - rect.left - canvas.width / 2;
@@ -15,18 +19,14 @@ function getMousePosition(canvas, event) {
     } else {
         let rateX = (x * R) / 200;
         let rateY = (y * R) / 200;
-        drawHitDynamic(rateX, -rateY, R)
+        sendAndDrawHit(rateX, -rateY, R)
     }
 }
 
-$(document).ready(function () {
-    drawHitStatic();
-})
-
-function drawHitDynamic(x, y, R) {
+function sendAndDrawHit(x, y, R) {
     $('#errorMessage').text("");
     $.ajax({
-        url: "http://localhost:8080/lab2/servlets.ControllerServlet",
+        url: "servlets.ControllerServlet",
         type: "get",
         data: {
             'x': x,

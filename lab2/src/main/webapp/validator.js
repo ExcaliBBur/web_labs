@@ -15,7 +15,7 @@ function handleFormSubmit(event) {
     validateX();
     if (!isError) {
         $.ajax({
-            url: "http://localhost:8080/lab2/servlets.ControllerServlet",
+            url: "servlets.ControllerServlet",
             type: "get",
             data: {'x': x, 'y': y, 'R': R, 'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone},
             success: function (result) {
