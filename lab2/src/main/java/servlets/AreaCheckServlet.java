@@ -4,6 +4,8 @@ import utilities.Row;
 import utilities.Rows;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,19 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.TimeZone;
 
-@ServletSecurity
+@ServletSecurity(
+        value = @HttpConstraint(
+                rolesAllowed = {
+                        "secured"
+                }),
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "GET", rolesAllowed = {
+                        "secured"
+                }),
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {
+                        "secured"
+                })
+        })
 public class AreaCheckServlet extends HttpServlet {
     private final int MAX_SIZE_OF_ROWS = 10;
 
@@ -29,16 +43,15 @@ public class AreaCheckServlet extends HttpServlet {
         Date date = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone(timezone));
-        long finishTime = System.currentTimeMillis();
         Rows rows = (Rows) req.getServletContext().getAttribute("rows");
         if (rows != null) {
             if (rows.getSize() >= MAX_SIZE_OF_ROWS) rows.shiftRow();
         } else rows = new Rows();
         if (checkHit(x, y, r)) {
-            Row row = new Row(df.format(date), x, y, r, "Hit", finishTime - startTime);
+            Row row = new Row(df.format(date), x, y, r, "Hit", System.currentTimeMillis() - startTime);
             rows.push(row);
         } else {
-            Row row = new Row(df.format(date), x, y, r, "Miss", finishTime - startTime);
+            Row row = new Row(df.format(date), x, y, r, "Miss", System.currentTimeMillis() - startTime);
             rows.push(row);
         }
         req.getServletContext().setAttribute("rows", rows);

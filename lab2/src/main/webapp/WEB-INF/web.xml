@@ -12,15 +12,4 @@
         <servlet-name>AreaCheckServlet</servlet-name>
         <url-pattern>/checker</url-pattern>
     </servlet-mapping>
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>AreaCheckServlet</web-resource-name>
-            <description>No direct browser access to AreaCheckServlet</description>
-            <url-pattern>/checker</url-pattern>
-            <http-method>POST</http-method>
-            <http-method>GET</http-method>
-        </web-resource-collection>
-    </security-constraint>
-
 </web-app>
