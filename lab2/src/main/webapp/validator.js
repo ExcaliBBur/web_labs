@@ -17,7 +17,8 @@ function handleFormSubmit(event) {
         $.ajax({
             url: "servlets.ControllerServlet",
             type: "get",
-            data: {'x': x, 'y': y, 'R': R, 'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone},
+            data: {'x': x, 'y': y, 'R': R, 'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
+                },
             success: function (result) {
                 $('#rows').html(result);
                 chart.clearRect(0, 0, canvas.width, canvas.height)

@@ -2,6 +2,7 @@ package servlets;
 
 import utilities.Row;
 import utilities.Rows;
+import utilities.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -38,7 +39,8 @@ public class AreaCheckServlet extends HttpServlet {
         long startTime = System.currentTimeMillis();
         float x = Float.parseFloat(req.getParameter("x"));
         float y = Float.parseFloat(req.getParameter("y"));
-        float r = Float.parseFloat(req.getParameter("R"));
+        float R = Float.parseFloat(req.getParameter("R"));
+        boolean isCanvas = Boolean.parseBoolean(req.getParameter("isCanvas"));
         String timezone = req.getParameter("timeZone");
         Date date = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -47,27 +49,28 @@ public class AreaCheckServlet extends HttpServlet {
         if (rows != null) {
             if (rows.getSize() >= MAX_SIZE_OF_ROWS) rows.shiftRow();
         } else rows = new Rows();
-        if (checkHit(x, y, r)) {
-            Row row = new Row(df.format(date), x, y, r, "Hit", System.currentTimeMillis() - startTime);
-            rows.push(row);
-        } else {
-            Row row = new Row(df.format(date), x, y, r, "Miss", System.currentTimeMillis() - startTime);
-            rows.push(row);
+        if (!isCanvas) {
+            Validator validator = new Validator(x, y, R);
+            if (!validator.validateAll()) return;
         }
+
+        Row row = new Row(df.format(date), x, y, R, checkHit(x, y, R), System.currentTimeMillis() - startTime);
+        rows.push(row);
+
         req.getServletContext().setAttribute("rows", rows);
         Collections.reverse(rows.getRows());
         rows.printRows(resp);
         Collections.reverse(rows.getRows());
     }
 
-    private boolean checkHit(float x, float y, float R) {
+    private String checkHit(float x, float y, float R) {
         if (x >= 0 && y > 0) {
-            return Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(R / 2, 2);
+            if (Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(R / 2, 2)) return "Hit";
         } else if (x < 0 && y >= 0) {
-            return y <= 1.0 / 2 * x + R / 2;
+            if (y <= 1.0 / 2 * x + R / 2) return "Hit";
         } else if (x >= 0 && y <= 0) {
-            return x <= R && -y <= R;
+            if (x <= R && -y <= R) return "Hit";
         }
-        return false;
+        return "Miss";
     }
 }

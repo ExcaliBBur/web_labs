@@ -30,7 +30,4 @@ public class Rows {
         for (Row row : rows) resp.getWriter().write(row.getData());
     }
 
-    public void printRowsJSP() {
-        for (Row row : rows) row.getData();
-    }
 }

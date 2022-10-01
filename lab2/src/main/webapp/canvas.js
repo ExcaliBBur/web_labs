@@ -32,7 +32,8 @@ function sendAndDrawHit(x, y, R) {
             'x': x,
             'y': y,
             'R': R,
-            'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone
+            'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+            'isCanvas': true
         },
         success: function (result) {
             $('#rows').html(result);
