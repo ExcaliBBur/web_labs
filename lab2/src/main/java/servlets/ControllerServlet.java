@@ -10,20 +10,11 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/servlets.ControllerServlet"})
 public class ControllerServlet extends HttpServlet {
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-    }
-
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp);
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("x") == null || req.getParameter("y") == null || req.getParameter("R") == null) {
-            getServletContext().getRequestDispatcher("java/webapp/index.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
         } else {
             getServletContext().getNamedDispatcher("AreaCheckServlet").forward(req, resp);
         }
@@ -33,8 +24,4 @@ public class ControllerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }

@@ -37,6 +37,14 @@ public class AreaCheckServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long startTime = System.currentTimeMillis();
+        try {
+            Float.parseFloat(req.getParameter("x"));
+            Float.parseFloat(req.getParameter("y"));
+            Float.parseFloat(req.getParameter("R"));
+        } catch (NumberFormatException e) {
+            resp.sendError(500);
+            return;
+        }
         float x = Float.parseFloat(req.getParameter("x"));
         float y = Float.parseFloat(req.getParameter("y"));
         float R = Float.parseFloat(req.getParameter("R"));
@@ -51,7 +59,10 @@ public class AreaCheckServlet extends HttpServlet {
         } else rows = new Rows();
         if (!isCanvas) {
             Validator validator = new Validator(x, y, R);
-            if (!validator.validateAll()) return;
+            if (!validator.validateAll()) {
+                resp.sendError(500);
+                return;
+            }
         }
 
         Row row = new Row(df.format(date), x, y, R, checkHit(x, y, R), System.currentTimeMillis() - startTime);
