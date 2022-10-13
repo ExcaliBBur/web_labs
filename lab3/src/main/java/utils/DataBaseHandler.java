@@ -31,7 +31,7 @@ public class DataBaseHandler {
         Query query = entityManager.createQuery("SELECT e FROM hit e ORDER BY e.id ASC");
         shiftedtHits = query.setMaxResults(1).getResultList();
         Hit hit = shiftedtHits.get(0);
-        query = entityManager.createQuery("DELETE FROM hit e WHERE e.id = "+hit.getId());
+        query = entityManager.createQuery("DELETE FROM hit e WHERE e.id = " + hit.getId());
         query.executeUpdate();
         transaction.commit();
     }

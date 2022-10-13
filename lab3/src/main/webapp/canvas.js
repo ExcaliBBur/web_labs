@@ -18,8 +18,7 @@ function getMousePosition(canvas, event) {
         $('#errorMessage').text("Нет информации о радиусе, невозможно определить координаты по графику");
     } else if (R < 1 || R > 5) {
         $('#errorMessage').text("Радиус не входит в заданный диапазон");
-    }
-    else {
+    } else {
         let rateX = (x * R) / 200;
         let rateY = (y * R) / 200;
         sendAndDrawHit(rateX, -rateY, R)

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-@ManagedBean(name="handlerBean")
+@ManagedBean(name = "handlerBean")
 @SessionScoped
 public class HandlerBean implements Serializable {
     private final int MAX_SIZE_OF_ROWS = 20;
@@ -61,6 +61,4 @@ public class HandlerBean implements Serializable {
         }
         hit = new Hit(hit.getX(), hit.getY(), hit.getR());
     }
-
-
 }

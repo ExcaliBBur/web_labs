@@ -22,7 +22,7 @@ function sendError(message) {
 }
 
 
-$('.submit').on('click', function (event){
+$('.submit').on('click', function (event) {
     isError = false;
     event.preventDefault();
     $('#errorMessage').text("")
