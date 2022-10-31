@@ -1,20 +1,16 @@
-<persistence xmlns="http://java.sun.com/xml/ns/persistence">
-    <persistence-unit name="hit" transaction-type="RESOURCE_LOCAL">
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="hit">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:/PostgresDS</jta-data-source>
         <class>utils.Hit</class>
         <properties>
-<<<<<<< HEAD
-<!--            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:60137/lab3"/>-->
-<!--            <property name="javax.persistence.jdbc.user" value="postgres"/>-->
-<!--            <property name="javax.persistence.jdbc.password" value="20WertU03"/>-->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://pg:5432/studs"/>
-            <property name="javax.persistence.jdbc.user" value="s335989"/>
-            <property name="javax.persistence.jdbc.password" value="pNjKHNNjYyXszdjJ["/>
-=======
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:60137/lab3"/>
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="фиг тебе а не пароль!"/>
->>>>>>> 8d0da610b738b49e18f2bc3108c2b475559fc70c
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+<!--            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:60137/lab3"/>-->
+<!--            <property name="eclipselink.jdbc.user" value="postgres"/>-->
+<!--            <property name="eclipselink.jdbc.password" value="20WertU03"/>-->
         </properties>
     </persistence-unit>
 </persistence>

@@ -1,13 +1,31 @@
 let canvas = document.getElementById("chart");
 let chart = canvas.getContext('2d');
+let tableInfo;
+let time = []
+let timeOut = 200
 
 canvas.addEventListener("mousedown", function (e) {
     getMousePosition(canvas, e);
 })
 
+
+$('#contain').on('mousedown', '.paginate_button', function () {
+    setTimeout(drawHitStatic,timeOut)
+});
+
 $(document).ready(function () {
-    drawHitStatic();
+    $('#example').DataTable({
+        "ordering": false,
+        "searching": false,
+        "bDestroy": true,
+        "stateSave": true,
+    })
+    drawHitStatic(false);
+    $('#example').on( 'length.dt', function () {
+        setTimeout(drawHitStatic,timeOut)
+    });
 })
+
 
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();
@@ -33,22 +51,29 @@ function sendAndDrawHit(x, y, R) {
     document.getElementById('form_hidden:button_hidden').click();
 }
 
-function drawHitStatic() {
-    clearCanvas()
-    let tableInfo = Array.prototype.map.call(document.querySelectorAll('.answerTable tr'), function (tr) {
-        return Array.prototype.map.call(tr.querySelectorAll('td'), function (td) {
-            return td.innerHTML;
+function drawHitStatic(updateTable) {
+    if (updateTable) {
+        $('#example').DataTable({
+            "ordering": false,
+            "searching": false,
+            "bDestroy": true,
+            "stateSave": true
+        })
+        $('#example').on( 'length.dt', function () {
+            setTimeout(drawHitStatic,100)
         });
-    });
+    }
+    clearCanvas();
+    setTableInfo();
     let offsetX = canvas.width / 2 - 1
     let offsetY = canvas.height / 2 - 1
-    for (let i = 1; i < tableInfo.length; i++) {
+    for (let i = 0; i < tableInfo.length; i++) {
         if (tableInfo[i][4] === "Hit") {
             chart.fillStyle = 'green';
         } else {
             chart.fillStyle = "red";
         }
-        let R = parseFloat(tableInfo[i][3]);
+        let R = parseFloat(tableInfo[0][3]);
         let x = parseFloat(tableInfo[i][1]);
         let y = parseFloat(tableInfo[i][2]);
         let rateX = (x / R) * 200;
@@ -62,4 +87,13 @@ function drawHitStatic() {
 
 function clearCanvas() {
     chart.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+function setTableInfo() {
+    tableInfo = Array.prototype.map.call(document.querySelectorAll('#rows tr'), function (tr) {
+        return Array.prototype.map.call(tr.querySelectorAll('td'), function (td) {
+            return td.innerHTML;
+        });
+    });
+    time.push(tableInfo[0][0])
 }

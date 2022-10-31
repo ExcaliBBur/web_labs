@@ -1,0 +1,11 @@
+<datasources>
+    <datasource jndi-name="java:jboss/datasources/PostgresDB" pool-name="PostgresDB">
+        <driver>postgresql</driver>
+        <driver-class>org.postgresql.Driver</driver-class>
+        <connection-url>jdbc:postgresql://pg:5432/studs</connection-url>
+        <security>
+            <user-name>s335989</user-name>
+            <password>pNjKHNNjYyXszdjJ</password>
+        </security>
+    </datasource>
+</datasources>

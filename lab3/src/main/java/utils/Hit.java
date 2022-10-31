@@ -1,5 +1,6 @@
 package utils;
 
+import javax.ejb.TransactionAttribute;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

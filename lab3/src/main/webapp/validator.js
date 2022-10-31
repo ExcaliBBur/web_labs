@@ -37,6 +37,10 @@ $('.submit').on('click', function (event) {
     }
 })
 
+$('.clear').on('click', function (event) {
+    event.preventDefault();
+    document.getElementById('form_hidden:clear_button_hidden').click();
+})
 
 function getR() {
     return Number($('.input_R').val().replace(",", "."));

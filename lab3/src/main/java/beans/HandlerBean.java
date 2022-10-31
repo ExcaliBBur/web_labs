@@ -13,8 +13,7 @@ import java.util.*;
 @ManagedBean(name = "handlerBean")
 @SessionScoped
 public class HandlerBean implements Serializable {
-    private final int MAX_SIZE_OF_ROWS = 20;
-    private long startTime;
+     private long startTime;
     private final DataBaseHandler dataBaseHandler = new DataBaseHandler();
 
     public Hit hit = new Hit();
@@ -48,6 +47,11 @@ public class HandlerBean implements Serializable {
         hits.remove(0);
     }
 
+    public void clearTable() {
+        dataBaseHandler.clearTable();
+        setHits(dataBaseHandler.getHits());
+    }
+
     public void addHit() {
         startTime = System.currentTimeMillis();
         hit.setHit(hit.checkHit());
@@ -55,10 +59,6 @@ public class HandlerBean implements Serializable {
         hit.setWorkTime((System.currentTimeMillis() - startTime));
         hits.add(hit);
         dataBaseHandler.addHit(hit);
-        if (hits.size() > MAX_SIZE_OF_ROWS) {
-            deleteLastRow();
-            dataBaseHandler.shiftHit();
-        }
         hit = new Hit(hit.getX(), hit.getY(), hit.getR());
     }
 }

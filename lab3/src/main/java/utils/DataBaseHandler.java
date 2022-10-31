@@ -17,30 +17,36 @@ public class DataBaseHandler {
     public void getConnection() {
         factory = Persistence.createEntityManagerFactory("hit");
         entityManager = factory.createEntityManager();
-        transaction = entityManager.getTransaction();
+//        transaction = entityManager.getTransaction();
     }
 
     public void addHit(Hit hit) {
-        transaction.begin();
+//        transaction.begin();
         entityManager.persist(hit);
-        transaction.commit();
+//        transaction.commit();
     }
 
     public void shiftHit() {
-        transaction.begin();
+//        transaction.begin();
         Query query = entityManager.createQuery("SELECT e FROM hit e ORDER BY e.id ASC");
         shiftedtHits = query.setMaxResults(1).getResultList();
         Hit hit = shiftedtHits.get(0);
         query = entityManager.createQuery("DELETE FROM hit e WHERE e.id = " + hit.getId());
         query.executeUpdate();
-        transaction.commit();
+//        transaction.commit();
     }
 
+    public void clearTable() {
+//        transaction.begin();
+        Query query = entityManager.createQuery("DELETE FROM hit e");
+        query.executeUpdate();
+//        transaction.commit();
+    }
     public List<Hit> getHits() {
-        transaction.begin();
+//        transaction.begin();
         Query query = entityManager.createQuery("SELECT e FROM hit e");
         hits = query.getResultList();
-        transaction.commit();
+//        transaction.commit();
         return hits;
     }
 }
