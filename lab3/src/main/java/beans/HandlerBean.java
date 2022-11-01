@@ -14,15 +14,12 @@ import java.util.*;
 @SessionScoped
 public class HandlerBean implements Serializable {
      private long startTime;
-    private final DataBaseHandler dataBaseHandler = new DataBaseHandler();
 
     public Hit hit = new Hit();
     public List<Hit> hits = new ArrayList<>();
 
-
     public HandlerBean() {
-        dataBaseHandler.getConnection();
-        setHits(dataBaseHandler.getHits());
+        setHits(DataBaseHandler.getHits());
     }
 
     public void setHit(Hit hit) {
@@ -43,22 +40,27 @@ public class HandlerBean implements Serializable {
         return outputHits;
     }
 
-    private void deleteLastRow() {
-        hits.remove(0);
-    }
-
-    public void clearTable() {
-        dataBaseHandler.clearTable();
-        setHits(dataBaseHandler.getHits());
-    }
-
     public void addHit() {
         startTime = System.currentTimeMillis();
-        hit.setHit(hit.checkHit());
+        hit.setHit(checkHit());
         hit.setCurrentTime(LocalDateTime.now());
         hit.setWorkTime((System.currentTimeMillis() - startTime));
         hits.add(hit);
-        dataBaseHandler.addHit(hit);
+        DataBaseHandler.addHit(hit);
         hit = new Hit(hit.getX(), hit.getY(), hit.getR());
+    }
+
+    public String checkHit() {
+        float x = hit.getX();
+        float y = hit.getY();
+        float R = hit.getR();
+        if (x >= 0 && y >= 0) {
+            if (x <= R / 2 && y <= R) return "Hit";
+        } else if (x < 0 && y >= 0) {
+            if (Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(R, 2)) return "Hit";
+        } else if (x <= 0 && y < 0) {
+            if (y >= -2 * x - R) return "Hit";
+        }
+        return "Miss";
     }
 }

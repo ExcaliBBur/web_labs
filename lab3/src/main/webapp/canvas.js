@@ -60,7 +60,7 @@ function drawHitStatic(updateTable) {
             "stateSave": true
         })
         $('#example').on( 'length.dt', function () {
-            setTimeout(drawHitStatic,100)
+            setTimeout(drawHitStatic,timeOut)
         });
     }
     clearCanvas();

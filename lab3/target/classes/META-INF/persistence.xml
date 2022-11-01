@@ -8,9 +8,9 @@
         <class>utils.Hit</class>
         <properties>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
-<!--            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:60137/lab3"/>-->
-<!--            <property name="eclipselink.jdbc.user" value="postgres"/>-->
-<!--            <property name="eclipselink.jdbc.password" value="20WertU03"/>-->
+            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:60137/lab3"/>
+            <property name="eclipselink.jdbc.user" value="postgres"/>
+            <property name="eclipselink.jdbc.password" value="20WertU03"/>
         </properties>
     </persistence-unit>
 </persistence>

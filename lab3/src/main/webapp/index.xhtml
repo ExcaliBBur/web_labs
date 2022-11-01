@@ -215,23 +215,16 @@
                     </h:inputText>
                     <br/> <br/>
                     <h:commandButton class="submit" value="Submit"/>
-                    <h:commandButton class="clear" id="clear"
-                                     value="Clear table"/>
+<!--                    <h:commandButton class="clear" id="clear"-->
+<!--                                     value="Clear table"/>-->
                 </h:form>
                 <h:form id="form_hidden" style="display: none">
                     <h:inputHidden id="x_hidden" value="#{handlerBean.hit.x}"/>
                     <h:inputHidden id="y_hidden" value="#{handlerBean.hit.y}"/>
                     <h:inputHidden id="r_hidden" value="#{handlerBean.hit.r}"/>
+                    <h:inputHidden id="length_hidden"/>
+                    <h:inputHidden id="pagination_button_hidden" />
                     <h:commandButton id="button_hidden" action="#{handlerBean.addHit()}">
-                        <f:ajax execute="@form" render="results" onevent="
-                                (data) => {
-                                    if (data.status === 'success') {
-                                        drawHitStatic(true)
-                                    }
-                                }
-                                "/>
-                    </h:commandButton>
-                    <h:commandButton id="clear_button_hidden" action="#{handlerBean.clearTable()}">
                         <f:ajax execute="@form" render="results" onevent="
                                 (data) => {
                                     if (data.status === 'success') {
@@ -292,7 +285,7 @@
                                 <tbody id="rows" align="center">
                                 <ui:repeat value="#{handlerBean.hits}" var="hit">
                                     <tr>
-                                        <td >#{hit.currentTimeForUser}</td>
+                                        <td >#{hit.currentTime}</td>
                                         <td >#{hit.x}</td>
                                         <td>#{hit.y}</td>
                                         <td >#{hit.r}</td>

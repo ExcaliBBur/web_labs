@@ -49,17 +49,6 @@ public class Hit {
         this.x = x;
     }
 
-    public String checkHit() {
-        if (x >= 0 && y >= 0) {
-            if (x <= R / 2 && y <= R) return "Hit";
-        } else if (x < 0 && y >= 0) {
-            if (Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(R, 2)) return "Hit";
-        } else if (x <= 0 && y < 0) {
-            if (y >= -2 * x - R) return "Hit";
-        }
-        return "Miss";
-    }
-
     public String getHit() {
         return hit;
     }
@@ -67,13 +56,6 @@ public class Hit {
     public void setHit(String isHit) {
         this.hit = isHit;
     }
-
-    @Transient
-    public String getCurrentTimeForUser() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return currentTime.format(formatter);
-    }
-
 
     public LocalDateTime getCurrentTime() {
         return currentTime;
