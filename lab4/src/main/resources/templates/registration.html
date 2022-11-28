@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration screen</title>
+    <style>
+        body {
+            background-color: #BAFFED;
+        }
+
+        #table {
+            width: 70%;
+            height: 60%;
+            margin: auto;
+            text-align: center;
+        }
+
+        .text {
+            margin-bottom: 10px;
+        }
+
+        h1, h2 {
+            font-family: sans-serif;
+            color: black;
+            font-size: 25px;
+            text-align: center;
+            vertical-align: text-top;
+        }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
+        }
+
+        input[type=text] {
+            width: 10%;
+        }
+
+        input[type=password] {
+            width: 10%;
+        }
+
+    </style>
+</head>
+<body>
+<table id="table">
+    <tr>
+        <td style="vertical-align: top">
+            <h1>Павлов Александр Р32111</h1>
+            <h2>Лабораторная работа №4</h2>
+            <h2>Вариант 11117</h2>
+            Регистрация пользователя: <br>
+            <p th:text="${errorMessage}" style="color:red"></p>
+            <form th:action="@{/registration}" method="post">
+                <b>Username:</b>
+                <input class="text" type="text" name="username"> <br>
+                <b>Password:</b>
+
+                <input class="text" type="password" name="password"> <br>
+                <input id="register" type="submit" value="Registration"/>
+            </form>
+            <a href="/login">Back to login screen</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
