@@ -18,14 +18,14 @@ public class HitController {
 
     @PostMapping
     public ResponseEntity<?> checkArea(@AuthenticationPrincipal User user, @RequestBody Hit hit) {
-        System.out.println(hit.toString());
-        hitService.setHit(hit);
+
+        hitService.setHit(user, hit);
         hitService.setUsername(user, hit);
         hitService.setTime(hit);
         hitService.setWorkTime(hit);
 
         hitService.saveHit(hit);
-        return new ResponseEntity<>(hit, HttpStatus.OK);
+        return new ResponseEntity<>(hitService.findHits(user), HttpStatus.OK);
     }
 
     @GetMapping

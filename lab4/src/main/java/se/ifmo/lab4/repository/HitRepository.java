@@ -6,5 +6,5 @@ import se.ifmo.lab4.entity.Hit;
 import java.util.List;
 
 public interface HitRepository extends JpaRepository<Hit, Long> {
-    List<Hit> findAllByUsername(String username);
+    List<Hit> findAllByUsernameOrderById(String username);
 }

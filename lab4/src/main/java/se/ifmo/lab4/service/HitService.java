@@ -7,15 +7,13 @@ import se.ifmo.lab4.entity.User;
 import se.ifmo.lab4.repository.HitRepository;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class HitService {
     private long startTime;
-
+    private final int MAX_SIZE_OF_ROWS = 10;
     @Autowired
     private HitRepository hitRepository;
 
@@ -23,17 +21,21 @@ public class HitService {
         float x = hit.getX();
         float y = hit.getY();
         float r = hit.getR();
-        if (x <= 0 && y >= 0) {
-            if (x <= -r / 2 && y <= r) return "Hit";
+        if (x <= 0 && y > 0) {
+            if (-x <= r / 2 && y <= r) return "Hit";
         } else if (x >= 0 && y <= 0) {
             if (Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(r / 2, 2)) return "Hit";
         } else if (x <= 0 && y <= 0) {
-            if (y >= -(1 / 2) * x - r / 2) return "Hit";
+            if (y >= -(1.0 / 2) * x - r / 2) return "Hit";
         }
         return "Miss";
     }
-    public void setHit(Hit hit) {
+    public void setHit(User user, Hit hit) {
         startTime = System.currentTimeMillis();
+        List<Hit> hits = hitRepository.findAllByUsernameOrderById(user.getUsername());
+        if (hits.size() >= MAX_SIZE_OF_ROWS) {
+            hitRepository.deleteById(hits.stream().findFirst().get().getId());
+        }
         hit.setHit(checkHit(hit));
     }
     public void setUsername(User user, Hit hit) {
@@ -51,6 +53,6 @@ public class HitService {
     }
 
     public List<Hit> findHits(User user) {
-        return hitRepository.findAllByUsername(user.getUsername());
+        return hitRepository.findAllByUsernameOrderById(user.getUsername());
     }
 }

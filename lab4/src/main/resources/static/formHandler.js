@@ -16,39 +16,51 @@ let form = new Vue({
         },
         addHit: function() {
             form.$data.errorMessage = null
-            let x = this.x
-            let y = this.y
-            let r = this.r
+            let x = this.x.replace(",", ".")
+            let y = this.y.replace(",", ".")
+            let r = this.r.replace(",", ".")
             if (r == null || r <= 0 || r >= 5) form.$data.errorMessage = "Введён неправильный R"
             if (y == null || y <= -5 || y >= 5) form.$data.errorMessage = "Введён неправильный Y"
             if (x == null || x <= -3 || x >= 5) form.$data.errorMessage = "Введён неправильный X"
             if (form.$data.errorMessage != null) return;
-            let hit = {
-                x: x,
-                y: y,
-                r: r
-            }
-            sendHit.save({}, hit).then(
-                result => result.json().then(
-                    data => {
-                        results.$data.hits.unshift(data)
-                    }, error => {
-                        dynamicResults.response = false;
-                        dynamicResults.lastHit = [];
-                        console.log(error.body.error)
-                    },
-                error => {
-                    console.log(error.body.error)
-                })
-            )
+
+            postReq(x, y, r)
         }
     },
     created: function () {
         sendHit.get().then(
             result => result.json().then(
                 data => {
-                    data = data.reverse()
-                    results.$data.hits = data
+                    results.$data.hits = data.reverse()
+                    drawHits(results.$data.hits)
         }));
     }
 })
+
+let results = new Vue({
+    el:"#results",
+    data: {
+        hits: []
+    }
+})
+
+function postReq(x, y, r) {
+    let hit = {
+        x: x,
+        y: y,
+        r: r
+    }
+    sendHit.save({}, hit).then(
+        result => result.json().then(
+            data => {
+                results.$data.hits = data.reverse()
+                clearCanvas()
+                drawHits(results.$data.hits)
+            }, error => {
+                console.log(error.body.error)
+            },
+            error => {
+                console.log(error.body.error)
+            })
+    )
+}
