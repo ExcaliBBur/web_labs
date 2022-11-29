@@ -26,16 +26,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                         .antMatchers("/registration").permitAll()
-                .antMatchers(HttpMethod.POST, "/hit").permitAll()
+                        .antMatchers(HttpMethod.POST, "/hit").permitAll()
                         .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                        .formLogin()
                         .loginPage("/login")
                         .defaultSuccessUrl("/index")
                         .failureUrl("/login-error")
                         .permitAll()
                 .and()
-                .logout(LogoutConfigurer::permitAll);
+                        .logout(LogoutConfigurer::permitAll);
         http.csrf().disable();
     }
     @Override
