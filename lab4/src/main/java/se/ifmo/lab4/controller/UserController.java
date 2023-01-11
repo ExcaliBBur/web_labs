@@ -1,8 +1,9 @@
 package se.ifmo.lab4.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import se.ifmo.lab4.entity.User;
 import se.ifmo.lab4.exceptions.InvalidLoginOrPasswordException;
@@ -11,24 +12,23 @@ import se.ifmo.lab4.service.UserService;
 
 @Controller
 @RequestMapping
+@CrossOrigin("http://localhost:8081")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/registration")
-    public String registration(User user, Model model) {
+    public ResponseEntity<String> registration(@RequestBody User user) {
         try {
             userService.registration(user);
-            return "redirect:/login";
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (UserAlreadyExistException | InvalidLoginOrPasswordException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "/registration";
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
     @GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("errorMessage", "Ошибка авторизации");
+    public String loginError() {
         return "/login";
     }
 }

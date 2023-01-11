@@ -8,8 +8,6 @@
         }
 
         #table {
-            width: 70%;
-            height: 60%;
             margin: auto;
             text-align: center;
             border: 5px solid red;
@@ -27,7 +25,8 @@
 
         .answerTable {
             width: 100%;
-            margin-bottom: 20px;
+            height: 100%;
+            margin-bottom: 2%;
             border: 1px solid;
             border-collapse: collapse;
         }
@@ -64,19 +63,17 @@
             border: 3px solid #555;
         }
 
-        input[type=text] {
-            min-width: 15%;
-        }
-
         td[colspan="3"] {
             font-family: sans-serif;
             color: black;
-            text-align: center;
         }
 
 
         canvas {
             position: absolute;
+        }
+        #results {
+            height: 90%;
         }
         @media screen and (max-width: 886px) {
             .block {
@@ -94,6 +91,9 @@
                 background: #000;
             }
 
+            td[colspan="5"] {
+                height: 0;
+            }
         }
         @media screen and (min-width: 886px) and (max-width: 1061px) {
             .block {
@@ -111,8 +111,13 @@
                 background: #000;
             }
             #table{
+                height: 70%;
                 min-width: 800px;
                 min-height: 600px;
+            }
+            td[colspan="5"] {
+                height: 0;
+                position: relative;
             }
         }
         @media screen and (min-width: 1061px) {
@@ -131,6 +136,7 @@
                 background: #000;
             }
             #table{
+                height: 70%;
                 min-width: 1000px;
                 min-height: 800px;
             }

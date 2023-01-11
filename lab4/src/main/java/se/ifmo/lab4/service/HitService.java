@@ -14,6 +14,7 @@ import java.util.List;
 public class HitService {
     private long startTime;
     private final int MAX_SIZE_OF_ROWS = 10;
+
     @Autowired
     private HitRepository hitRepository;
 
