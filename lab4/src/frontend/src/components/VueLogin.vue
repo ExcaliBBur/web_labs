@@ -3,8 +3,7 @@
     <meta charset="UTF-8">
     <title>Login screen</title>
 </head>
-<body>
-<table id="table">
+<table id="reg_table">
     <tr>
         <td style="vertical-align: top">
             <h1>Павлов Александр P32111</h1>
@@ -27,7 +26,6 @@
         </td>
     </tr>
 </table>
-</body>
 </template>
 
 <script>
@@ -51,8 +49,8 @@ export default {
     const submit = async () => {
         errorMsg.errorMessage = null;
 
-        await axios.post("http://localhost:8080/login", user).catch(function () {
-            errorMsg.errorMessage = "Error";
+        await axios.post("http://localhost:8080/login", user).catch(function (error) {
+            errorMsg.errorMessage = error.response.data;
         })
         if (errorMsg.errorMessage == null) {
             await router.push('index');
@@ -74,7 +72,7 @@ export default {
             background-color: #BAFFED;
         }
 
-        #table {
+        #reg_table {
             width: 70%;
             height: 60%;
             margin: auto;

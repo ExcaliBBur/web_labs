@@ -18,7 +18,6 @@ public class HitController {
 
     @PostMapping
     public ResponseEntity<?> checkArea(@AuthenticationPrincipal User user, @RequestBody Hit hit) {
-
         hitService.setHit(user, hit);
         hitService.setUsername(user, hit);
         hitService.setTime(hit);

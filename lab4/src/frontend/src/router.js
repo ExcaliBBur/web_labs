@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router"
-import VueRegistration from "./components/VueRegistration.vue";
-import VueLogin from "./components/VueLogin";
-import VueIndex from "./components/VueIndex";
+import VueRegistration from "@/components/VueRegistration.vue";
+import VueLogin from "@/components/VueLogin";
+import VueIndex from "@/components/VueIndex";
 
 
 const routes = [

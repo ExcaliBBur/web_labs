@@ -1,11 +1,6 @@
 <template>
-  <div class="hello">
-    <head>
-    <meta charset="UTF-8">
-    <title>Registration screen</title>
-</head>
-<body>
-<table id="table">
+<div class="registration">
+<table id="reg_table">
     <tr>
         <td style="vertical-align: top">
             <h1>Павлов Александр Р32111</h1>
@@ -17,7 +12,11 @@
             </p>
             <form @submit.prevent="submit">
                 <b>Username:</b>
-                <input v-model="user.username" class="text" type="text" name="username"> <br>
+                <input v-model="user.username" class="text" type="text" name="username" lazy-rules
+                :rules="[
+            (val) =>
+              (val && val.length > 0) || 'Please write your userusername',
+            ]"> <br>
                 <b>Password:</b>
 
                 <input v-model="user.password" class="text" type="password" name="password"> <br>
@@ -27,7 +26,6 @@
         </td>
     </tr>
 </table>
-</body>
   </div>
 </template>
 
@@ -71,11 +69,11 @@ export default {
 </script>
 
 <style>
-        body {
+        #registration {
             background-color: #BAFFED;
         }
 
-        #table {
+        #reg_table {
             width: 70%;
             height: 60%;
             margin: auto;
@@ -106,4 +104,4 @@ export default {
             width: 10%;
         }
 
-    </style>
+</style>

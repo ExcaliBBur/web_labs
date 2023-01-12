@@ -6,13 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import se.ifmo.lab4.entity.User;
+import se.ifmo.lab4.exceptions.AuthorizationException;
 import se.ifmo.lab4.exceptions.InvalidLoginOrPasswordException;
 import se.ifmo.lab4.exceptions.UserAlreadyExistException;
 import se.ifmo.lab4.service.UserService;
 
 @Controller
 @RequestMapping
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin("http://localhost:8081/*")
 public class UserController {
 
     @Autowired
@@ -27,8 +28,12 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
-    @GetMapping("/login-error")
-    public String loginError() {
-        return "/login";
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        try {
+            return userService.authorization(user);
+        } catch (AuthorizationException | InvalidLoginOrPasswordException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 }
