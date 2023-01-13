@@ -1,14 +1,13 @@
 package se.ifmo.lab4.entity;
 
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import se.ifmo.lab4.entity.enums.Roles;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Entity
 @Table(name = "users")

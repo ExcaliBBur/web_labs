@@ -12,8 +12,7 @@ import se.ifmo.lab4.exceptions.UserAlreadyExistException;
 import se.ifmo.lab4.service.UserService;
 
 @Controller
-@RequestMapping
-@CrossOrigin("http://localhost:8081/*")
+@RequestMapping("/api/auth")
 public class UserController {
 
     @Autowired

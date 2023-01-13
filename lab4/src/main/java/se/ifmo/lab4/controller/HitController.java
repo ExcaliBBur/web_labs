@@ -10,7 +10,8 @@ import se.ifmo.lab4.entity.User;
 import se.ifmo.lab4.service.HitService;
 
 @RestController
-@RequestMapping("/hit")
+@RequestMapping("/api/hit")
+@CrossOrigin
 public class HitController {
 
     @Autowired

@@ -50,7 +50,7 @@ export default {
     const submit = async () => {
         errorMsg.errorMessage = null;
 
-        await axios.post("http://localhost:8080/registration", user).catch(function (error) {
+        await axios.post("http://localhost:8080/api/auth/registration", user).catch(function (error) {
             errorMsg.errorMessage = error.response.data;
         })
         if (errorMsg.errorMessage == null) {

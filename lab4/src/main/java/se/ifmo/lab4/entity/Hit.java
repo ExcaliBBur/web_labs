@@ -1,6 +1,6 @@
 package se.ifmo.lab4.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "hits")

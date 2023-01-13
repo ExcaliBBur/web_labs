@@ -37,15 +37,7 @@
                         </tr>
                         </thead>
                         <tbody id="rows" align="center">
-
-                        <tr v-for="hit in hits" v-bind:key="hit">
-                            <td> {{hit.curTime}}</td>
-                            <td> {{hit.x}}</td>
-                            <td> {{hit.y}}</td>
-                            <td> {{hit.r}}</td>
-                            <td> {{hit.hit}}</td>
-                            <td> {{hit.workTime}} ms</td>
-                        </tr>
+                            <vueResults/>
                         </tbody>
                 </table>
             </div>
@@ -58,12 +50,21 @@
 <script>
 import vueGraph from "@/components/VueGraph.vue"
 import vueForm from "@/components/VueForm.vue"
+import vueResults from "@/components/VueResults.vue"
+
 export default{
     name: "VueIndex",
     components: {
         vueGraph,
         vueForm,
+        vueResults,
+    },
+    data() {
+        return {
+            hits: [],
+        }
     }
+
 }
 </script>
 

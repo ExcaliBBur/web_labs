@@ -29,29 +29,29 @@ export default{
             y: null,
             r: null,
             errorMessage: null,
-            hits: [],
+            hits: null,
         }
         },
-        methods: {
-            validateLength() {
-                if (this.x != null && this.x.length >= 8) this.x = this.x.substr(0, 7)
-                if (this.y != null && this.y.length >= 8) this.y = this.y.substr(0, 7)
-                if (this.r != null && this.r.length >= 8) this.r = this.r.substr(0, 7)
-            },
-            addHit() {
-                let hit = {
-                    x: this.x,
-                    y: this.y,
-                    r: this.r
-                }
-                axios.post("http://localhost:8080/hit", hit).catch(function (error) {
-                    this.errorMessage = error.response.data;
-                }).then(function (data) {
-                    this.hits = data.reverse();
-                })
-            }
+    methods: {
+        validateLength() {
+            if (this.x != null && this.x.length >= 8) this.x = this.x.substr(0, 7)
+            if (this.y != null && this.y.length >= 8) this.y = this.y.substr(0, 7)
+            if (this.r != null && this.r.length >= 8) this.r = this.r.substr(0, 7)
         },
-        created() {
+        async addHit() {
+            let hit = {
+                x: this.x,
+                y: this.y,
+                r: this.r
+            }
+            await axios.post("http://localhost:8080/api/hit", hit).catch(function (error) {
+                this.errorMessage = error.response.data;
+            }).then(response => {
+                this.hits = response.data.reverse();
+            });         
+        },
+    },
+    created() {
             // sendHit.get().then(
             //     result => result.json().then(
             //         data => {
@@ -59,6 +59,6 @@ export default{
             //             drawHits(results.$data.hits)
             // }));
 
-        }
+    }
 }
 </script>
