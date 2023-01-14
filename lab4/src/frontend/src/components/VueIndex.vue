@@ -4,19 +4,19 @@
     <tr>
         <td colspan="5" style="text-align: right">
             <p>{{ username }}</p>
-            <form action="http://localhost:8080/logout" method="post">
-                <input type="submit" value="Sign Out"/>
+            <form action="http://localhost:8080/api/logout" method="post">
+                <input id="logout_btn" type="submit" value="Sign Out" />
             </form>
         </td>
     </tr>
     <tr class="firstRow">
         <td class="form" colspan="1" width="50%">
-            <vueForm/>
+            <p id="errorMessage">{{ errorMessage }}</p>
+            <vueForm :dataBaseHits="dataBaseHits" @getR="R = $event" @getHits="dataBaseHits = $event" 
+            @getErrMsg="errorMessage = $event"></vueForm>
         </td>
         <td class="block">
-            <div id = "graph">
-                <vueGraph/>
-            </div>
+            <vueGraph :dataBaseHits="dataBaseHits" :R="R" @getHits="dataBaseHits = $event" @getErrMsg="errorMessage = $event"></vueGraph>
         </td>
     </tr>
     <tr>
@@ -37,7 +37,7 @@
                         </tr>
                         </thead>
                         <tbody id="rows" align="center">
-                            <vueResults/>
+                            <vueResults :dataBaseHits="dataBaseHits"></vueResults>
                         </tbody>
                 </table>
             </div>
@@ -51,6 +51,10 @@
 import vueGraph from "@/components/VueGraph.vue"
 import vueForm from "@/components/VueForm.vue"
 import vueResults from "@/components/VueResults.vue"
+import axios from 'axios'
+import VueCookies from "vue-cookies"
+import moment from "moment"
+import { useRouter } from 'vue-router';
 
 export default{
     name: "VueIndex",
@@ -61,10 +65,42 @@ export default{
     },
     data() {
         return {
-            hits: [],
+            dataBaseHits: [],
+            username: '',
+            R: null,
+            errorMessage: null,
         }
-    }
-
+    },
+    created() {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + VueCookies.get("jwt")
+        if (VueCookies.get("jwt") == null) {
+            const router = useRouter();
+            router.push("login")
+        }
+        this.getHitsOnCreation();
+    },
+    methods: {
+        format_date(value){
+            if (value) {
+            return moment(String(value)).format('yyyy-MM-dd HH:mm:ss')
+            }
+        },
+        async getHitsOnCreation() {
+                await axios.get("http://localhost:8080/api/hit").catch(function (error) {
+                    console.log(error.response.data)
+                }).then(response => {
+                    if (typeof response.data == 'number' || typeof response.data == 'string') {
+                        this.username = response.data;
+                        return;
+                    }
+                    this.dataBaseHits = response.data;
+                    for (let i = 0; i < this.dataBaseHits.length; i++) {
+                        this.dataBaseHits[i].curTime = this.format_date(this.dataBaseHits[i].curTime)
+                    }
+                    this.username = this.dataBaseHits[0].username;
+                });  
+            }
+    },
 }
 </script>
 
@@ -110,11 +146,9 @@ export default{
             background: white;
         }
 
-        .text {
-            margin-bottom: 5%;
-            min-width: 15%;
+        #logout_btn {
+            margin-bottom: 1%;   
         }
-
         .firstRow {
             background: white;
         }
@@ -136,7 +170,7 @@ export default{
         }
 
         #results {
-            height: 90%;
+            height: 80%;
         }
         @media screen and (max-width: 886px) {
             .block {
@@ -175,8 +209,6 @@ export default{
             }
             #table{
                 height: 70%;
-                min-width: 800px;
-                min-height: 600px;
             }
             td[colspan="5"] {
                 height: 0;
@@ -200,8 +232,6 @@ export default{
             }
             #table{
                 height: 70%;
-                min-width: 1000px;
-                min-height: 800px;
             }
         }
     </style>

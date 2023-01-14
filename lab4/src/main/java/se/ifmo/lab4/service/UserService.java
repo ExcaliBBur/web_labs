@@ -25,6 +25,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public void registration(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent())
@@ -39,8 +41,9 @@ public class UserService {
     public ResponseEntity<String> authorization(User user) {
         User authUser = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new InvalidLoginOrPasswordException("Неправильный логин или пароль"));
-        if (passwordEncoder.matches(user.getPassword(), authUser.getPassword()))
+        if (passwordEncoder.matches(user.getPassword(), authUser.getPassword())) {
             return new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK);
+        }
         return new ResponseEntity<>( "Неправильный логин или пароль", HttpStatus.UNAUTHORIZED);
     }
 }

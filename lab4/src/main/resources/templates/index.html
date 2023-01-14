@@ -291,13 +291,13 @@
                         </thead>
                         <tbody id="rows" align="center">
 
-                        <tr v-for="hit in hits">
-                            <td> {{hit.curTime}}</td>
-                            <td> {{hit.x}}</td>
-                            <td> {{hit.y}}</td>
-                            <td> {{hit.r}}</td>
-                            <td> {{hit.hit}}</td>
-                            <td> {{hit.workTime}} ms</td>
+                        <tr v-for="dataBaseHit in dataBaseHits">
+                            <td> {{dataBaseHit.curTime}}</td>
+                            <td> {{dataBaseHit.x}}</td>
+                            <td> {{dataBaseHit.y}}</td>
+                            <td> {{dataBaseHit.r}}</td>
+                            <td> {{dataBaseHit.dataBaseHit}}</td>
+                            <td> {{dataBaseHit.workTime}} ms</td>
                         </tr>
                         </tbody>
                 </table>

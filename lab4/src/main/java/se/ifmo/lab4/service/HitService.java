@@ -2,18 +2,15 @@ package se.ifmo.lab4.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.ifmo.lab4.entity.DataBaseHit;
 import se.ifmo.lab4.entity.Hit;
 import se.ifmo.lab4.entity.User;
 import se.ifmo.lab4.repository.HitRepository;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class HitService {
-    private long startTime;
-    private final int MAX_SIZE_OF_ROWS = 10;
 
     @Autowired
     private HitRepository hitRepository;
@@ -31,29 +28,12 @@ public class HitService {
         }
         return "Miss";
     }
-    public void setHit(User user, Hit hit) {
-        startTime = System.currentTimeMillis();
-        List<Hit> hits = hitRepository.findAllByUsernameOrderById(user.getUsername());
-        if (hits.size() >= MAX_SIZE_OF_ROWS) {
-            hitRepository.deleteById(hits.stream().findFirst().get().getId());
-        }
-        hit.setHit(checkHit(hit));
-    }
-    public void setUsername(User user, Hit hit) {
-        hit.setUsername(user.getUsername());
-    }
-    public void saveHit(Hit hit) {
-        hitRepository.save(hit);
-    }
-    public void setTime(Hit hit) {
-        hit.setCurTime(new SimpleDateFormat("HH:mm:ss dd/MM/yyyy")
-                .format(Calendar.getInstance().getTime()));
-    }
-    public void setWorkTime(Hit hit) {
-        hit.setWorkTime(System.currentTimeMillis() - startTime);
+
+    public void saveHit(DataBaseHit dataBaseHit) {
+        hitRepository.save(dataBaseHit);
     }
 
-    public List<Hit> findHits(User user) {
-        return hitRepository.findAllByUsernameOrderById(user.getUsername());
+    public List<DataBaseHit> findHits(User user) {
+        return hitRepository.findFirst10ByUsernameOrderByIdDesc(user.getUsername());
     }
 }

@@ -15,10 +15,10 @@
             </p>
             <form @submit.prevent="submit">
                 <b>Username:</b>
-                <input v-model="user.username" class="text" type="text" name="username"> <br>
+                <input v-model="user.username" class="login" type="text" name="username"> <br>
                 <b>Password:</b>
 
-                <input v-model="user.password" class="text" type="password" name="password"> <br>
+                <input v-model="user.password" class="login" type="password" name="password"> <br>
                 <input id="register" type="submit" value="Sign in"/>
             </form>
 
@@ -82,8 +82,9 @@ export default {
             margin: auto;
             text-align: center;
         }
-        .text {
-            margin-bottom: 10px;
+        .login {
+            margin-bottom: 1%;
+            width: 10%
         }
         h1, h2 {
             font-family: sans-serif;
@@ -97,11 +98,4 @@ export default {
             border: 3px solid #555;
         }
 
-        input[type=text] {
-            width: 10%;
-        }
-
-        input[type=password] {
-            width: 10%;
-        }
 </style>

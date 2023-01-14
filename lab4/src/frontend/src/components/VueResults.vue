@@ -1,16 +1,17 @@
 <template>
-    <tr v-for="hit in hits" v-bind:key="hit">
-        <td> {{hit.curTime}}</td>
-        <td> {{hit.x}}</td>
-        <td> {{hit.y}}</td>
-        <td> {{hit.r}}</td>
-        <td> {{hit.hit}}</td>
-        <td> {{hit.workTime}} ms</td>
+    <tr v-for="dataBaseHit in dataBaseHits" v-bind:key="dataBaseHit">
+        <td> {{dataBaseHit.curTime}}</td>
+        <td> {{dataBaseHit.x}}</td>
+        <td> {{dataBaseHit.y}}</td>
+        <td> {{dataBaseHit.r}}</td>
+        <td> {{dataBaseHit.hit}}</td>
+        <td> {{dataBaseHit.workTime}} ms</td>
     </tr>
 </template>
 
 <script>
+
     export default {
-        inject: ['hits']
+        props: ['dataBaseHits']
     }
 </script>

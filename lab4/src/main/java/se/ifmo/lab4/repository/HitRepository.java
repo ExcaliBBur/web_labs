@@ -1,10 +1,10 @@
 package se.ifmo.lab4.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import se.ifmo.lab4.entity.Hit;
+import se.ifmo.lab4.entity.DataBaseHit;
 
 import java.util.List;
 
-public interface HitRepository extends JpaRepository<Hit, Long> {
-    List<Hit> findAllByUsernameOrderById(String username);
+public interface HitRepository extends JpaRepository<DataBaseHit, Long> {
+    List<DataBaseHit> findFirst10ByUsernameOrderByIdDesc(String username);
 }
