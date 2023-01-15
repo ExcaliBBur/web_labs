@@ -50,7 +50,7 @@ export default {
     const submit = async () => {
         errorMsg.errorMessage = null;
 
-        await axios.post("http://localhost:8080/api/auth/login", user).catch(function (error) {
+        await axios.post("/api/auth/login", user).catch(function (error) {
             errorMsg.errorMessage = error.response.data;
         }).then(function (token) {
             VueCookies.config('Session','','',true)

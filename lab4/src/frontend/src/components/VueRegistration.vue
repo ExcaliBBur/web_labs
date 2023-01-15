@@ -57,7 +57,7 @@ export default {
                 errorMsg.errorMessage = "Пароль должен быть больше 6 символов"
                 return;
             }
-            await axios.post("http://localhost:8080/api/auth/registration", user).catch(function (error) {
+            await axios.post("/api/auth/registration", user).catch(function (error) {
                 errorMsg.errorMessage = error.response.data;
             })
             if (errorMsg.errorMessage == null) {

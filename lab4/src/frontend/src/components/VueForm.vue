@@ -79,7 +79,7 @@ export default{
                 return;
             }
             this.isDisabled = true;
-            await axios.post("http://localhost:8080/api/hit", dataBaseHit).catch(function (error) {
+            await axios.post("/api/hit", dataBaseHit).catch(function (error) {
                 this.errorMessage = error.response.data;
                 this.$emit("getErrMsg", this.errorMessage);
             }).then(response => {

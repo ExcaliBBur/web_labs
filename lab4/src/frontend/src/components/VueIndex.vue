@@ -69,14 +69,12 @@ export default{
             username: '',
             R: null,
             errorMessage: null,
+            authError: false,
+            router: useRouter(),
         }
     },
     created() {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + VueCookies.get("jwt")
-        if (VueCookies.get("jwt") == null) {
-            const router = useRouter();
-            router.push("login")
-        }
         this.getHitsOnCreation();
     },
     methods: {
@@ -86,9 +84,14 @@ export default{
             }
         },
         async getHitsOnCreation() {
-                await axios.get("http://localhost:8080/api/hit").catch(function (error) {
-                    console.log(error.response.data)
+                await axios.get("/api/hit").catch(error => {
+                    if (error.response.status == 401) {
+                        this.authError = true; 
+                        this.router.push("login")
+                }
                 }).then(response => {
+                    if (this.authError) return;
+                    this.authError = false;
                     if (typeof response.data == 'number' || typeof response.data == 'string') {
                         this.username = response.data;
                         return;

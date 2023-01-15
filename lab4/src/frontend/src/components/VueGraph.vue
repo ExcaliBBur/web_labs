@@ -215,7 +215,6 @@ export default {
                   let x = event.clientX - rect.left - this.canvas.width / 2;
                   let y = event.clientY - rect.top - this.canvas.height / 2;
                   let R = this.R;
-                  console.log(R)
                   if (R == null) {
                         this.errorMessage = "Нет информации о радиусе, невозможно определить координаты по графику";
                         this.$emit("getErrMsg", this.errorMessage);
@@ -233,7 +232,7 @@ export default {
                         y: -rateY,
                         r: R
                   }
-                  await axios.post("http://localhost:8080/api/hit", dataBaseHit).catch(function (error) {
+                  await axios.post("/api/hit", dataBaseHit).catch(function (error) {
                         this.errorMessage = error.response.data;
                   }).then(response => {
                         this.hitsRes = response.data;

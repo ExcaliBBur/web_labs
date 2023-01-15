@@ -9,7 +9,7 @@ const routes = [
     {path: '/registration', component: VueRegistration},
     {path: '/login', component: VueLogin},
     {path: '/index', component: VueIndex},
-    { path: "/:catchAll(.*)", component: PageNotFound }
+    {path: "/:catchAll(.*)", component: PageNotFound}
 
 ];
 

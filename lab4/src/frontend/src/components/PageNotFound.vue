@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
 </template>
 
-<style>
+<style scoped>
     #pageNotFound {
     background-color: #95c2de;
     }
