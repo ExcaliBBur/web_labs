@@ -45,6 +45,7 @@ public class HitController {
 
     @GetMapping
     public ResponseEntity<?> getHits(@AuthenticationPrincipal User user) {
+        if (user == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         List<DataBaseHit> hits = hitService.findHits(user);
         if (hits.size() == 0) return new ResponseEntity<>(user.getUsername(), HttpStatus.OK);
         return new ResponseEntity<>(hits, HttpStatus.OK);

@@ -52,6 +52,7 @@ export default {
 
         await axios.post("/api/auth/login", user).catch(function (error) {
             errorMsg.errorMessage = error.response.data;
+            return;
         }).then(function (token) {
             VueCookies.config('Session','','',true)
             VueCookies.set('jwt', token.data)

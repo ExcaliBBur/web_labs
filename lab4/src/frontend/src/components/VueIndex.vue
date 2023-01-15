@@ -4,7 +4,7 @@
     <tr>
         <td colspan="5" style="text-align: right">
             <p>{{ username }}</p>
-            <form action="http://localhost:8080/api/logout" method="post">
+            <form action="/api/logout" method="post">
                 <input id="logout_btn" type="submit" value="Sign Out" />
             </form>
         </td>
